@@ -7,11 +7,11 @@ import React, {
 
 import styles from "../App.module.css"
 import axios from 'axios';
-import { CadastroClientesInterface } from '../interfaces/CadastroClientesInterfaces';
+import { CadastroProfissionalInterface } from '../interfaces/CadastroProfissionalInterfaces';
 
 const Listagem = () => {
 
-    const [usuarios, setUsuarios] = useState<CadastroClientesInterface[]>([]);
+    const [usuarios, setUsuarios] = useState<CadastroProfissionalInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [erro, setError] = useState("");
 
@@ -127,6 +127,7 @@ const Listagem = () => {
                                             <td>{usuario.bairro}</td>
                                             <td>{usuario.cep}</td>  
                                             <td>{usuario.complemento}</td>
+                                            <td>{}</td>
                                            
                                           
                                             <td>

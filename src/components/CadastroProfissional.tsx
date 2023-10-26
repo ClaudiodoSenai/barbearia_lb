@@ -28,7 +28,7 @@ const CadastroProfissional = () => {
     const [salario, setSalario] = useState<string>("");
     const [senha, setSenha] = useState<string>("");
 
-    const cadastrarUsuario = (e: FormEvent) => {
+    const cadastrarProfissional = (e: FormEvent) => {
         e.preventDefault()
         const dados = {
             nome: nome,
@@ -122,6 +122,10 @@ const CadastroProfissional = () => {
             setComplemento(e.target.value)
         }
 
+        if (e.target.name === "salario") {
+            setSalario(e.target.value)
+        }
+
         if (e.target.name === "senha") {
             setSenha(e.target.value)
         }
@@ -137,7 +141,7 @@ const CadastroProfissional = () => {
                             <h5 className='card-title'>
                                 Cadastrar Cliente
                             </h5>
-                            <form onSubmit={cadastrarUsuario} className='row g-3'>
+                            <form onSubmit={cadastrarProfissional} className='row g-3'>
                                 <div className='col-4'>
                                     <label htmlFor="nome" className='form-label'>Nome</label>
                                     <input type="text" name='nome' className='form-control' required onChange={handleState} />
@@ -193,6 +197,11 @@ const CadastroProfissional = () => {
                                 <div className='col-4'>
                                     <label htmlFor="cep" className='form-label'>Cep</label>
                                     <input type="text" name='cep' className='form-control' required onChange={handleState} />
+                                </div>
+
+                                <div className='col-4'>
+                                    <label htmlFor="salario" className='form-label'>Salario</label>
+                                    <input type="text" name='salario' className='form-control' required onChange={handleState} />
                                 </div>
 
                                 <div className='col-6'>
