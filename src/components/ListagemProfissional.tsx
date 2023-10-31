@@ -101,7 +101,7 @@ const ListagemProfissional = () => {
                                         <th>Celular</th>
                                         <th>E-mail</th>
                                         <th>CPF</th>
-                                        <th>Data de Nasciemento</th>
+                                     
                                         <th>Cidade</th>
                                         <th>Estado</th>
                                         <th>Pais</th>
@@ -109,8 +109,8 @@ const ListagemProfissional = () => {
                                         <th>Numero</th>
                                         <th>Bairro</th>
                                         <th>Cep</th>
-                                        <th>Salario</th>
-                                        <th>Complemento</th>
+                                    
+                                        
                                        
                                         <th>Ações</th>
                                     </tr>
@@ -123,7 +123,7 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.celular}</td>
                                             <td>{profissionais.email}</td>
                                             <td>{profissionais.cpf}</td>
-                                            <td>{profissionais.dataNascimento}</td>
+                                         
                                             <td>{profissionais.cidade}</td>
                                             <td>{profissionais.estado}</td>
                                             <td>{profissionais.pais}</td>
@@ -131,8 +131,8 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.numero}</td>
                                             <td>{profissionais.bairro}</td>
                                             <td>{profissionais.cep}</td>  
-                                            <td>{profissionais.salario}</td>
-                                            <td>{profissionais.complemento}</td>
+                                           
+                                          
                                           
                                            
                                           
