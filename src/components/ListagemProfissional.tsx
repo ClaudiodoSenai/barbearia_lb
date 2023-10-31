@@ -35,7 +35,11 @@ const ListagemProfissional = () => {
                         }
 
                     }).then(function (response) {
-                        setProfissional(response.data.data);
+                        if(response.data.status === true){
+                            setProfissional(response.data.data)
+                        } else { 
+                            setProfissional([])
+                        }
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -65,6 +69,7 @@ const ListagemProfissional = () => {
         <div>
             <main className={styles.main}>
                 <div className='container'>
+
                     <div className='col-md mb-3'>
                         <div className='card'>
                             <div className='card-body'>

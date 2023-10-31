@@ -47,6 +47,7 @@ const Cadastro = () => {
         }
 
         console.log(dados);
+
         axios.post('http://127.0.0.1:8000/api/cliente/store',
             dados, {
             headers: {
@@ -54,6 +55,7 @@ const Cadastro = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
+            
             if(response.data.success == false){
                 console.log("error");
                 console.log(response.data.error);
@@ -174,7 +176,7 @@ const Cadastro = () => {
 
                                 <div className='col-4'>
                                     <label htmlFor="dataNascimento" className='form-label'>Data de nascimento</label>
-                                    <input type="text" name='dataNascimento' className='form-control' required onChange={handleState} />
+                                    <input type="date" name='dataNascimento' className='form-control' required onChange={handleState} />
                                 </div>
 
                                 <div className='col-4'>

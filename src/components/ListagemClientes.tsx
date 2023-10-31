@@ -35,7 +35,11 @@ const Listagem = () => {
                         }
 
                     }).then(function (response) {
-                        setUsuarios(response.data.data);
+                        if(response.data.status === true){
+                            setUsuarios(response.data.data)
+                        } else { 
+                            setUsuarios([])
+                        }
                     }).catch(function (error) {
                         console.log(error);
                     });
