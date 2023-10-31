@@ -9,9 +9,9 @@ import styles from "../App.module.css"
 import axios from 'axios';
 import { CadastroProfissionalInterface } from '../interfaces/CadastroProfissionalInterfaces';
 
-const Listagem = () => {
+const ListagemProfissional = () => {
 
-    const [usuarios, setUsuarios] = useState<CadastroProfissionalInterface[]>([]);
+    const [profissionais, setProfissional] = useState<CadastroProfissionalInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [erro, setError] = useState("");
 
@@ -26,7 +26,7 @@ const Listagem = () => {
 
         async function fetchData() {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/cliente/find/nome',
+                const response = await axios.post('http://127.0.0.1:8000/api/profissional/find/nome',
                     {nome:pesquisa},
                     {
                         headers: {
@@ -35,7 +35,7 @@ const Listagem = () => {
                         }
 
                     }).then(function (response) {
-                        setUsuarios(response.data.data);
+                        setProfissional(response.data.data);
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -49,8 +49,8 @@ const Listagem = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/cliente/all');
-                setUsuarios(response.data.data);
+                const response = await axios.get('http://127.0.0.1:8000/api/profissional/all');
+                setProfissional(response.data.data);
             } catch (error) {
                 setError("Ocorreu um erro");
                 console.log(error);
@@ -65,11 +65,10 @@ const Listagem = () => {
         <div>
             <main className={styles.main}>
                 <div className='container'>
-
                     <div className='col-md mb-3'>
                         <div className='card'>
                             <div className='card-body'>
-                                <h5 className='card-title'>Pesquisar</h5>
+                                <h5 className='card-little'>Pesquisar</h5>
                                 <form onSubmit={buscar} className='row'>
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
@@ -88,8 +87,8 @@ const Listagem = () => {
 
                     <div className='card'>
                         <div className='card-body'>
-                            <h5 className='card-title'>Listagem de Usuarios</h5>
-                            <table className='table table-striped'>
+                            <h5 className='card-title'>Listagem de Profissionais</h5>
+                            <table className='table table-hover'>
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -105,29 +104,31 @@ const Listagem = () => {
                                         <th>Numero</th>
                                         <th>Bairro</th>
                                         <th>Cep</th>
+                                        <th>Salario</th>
                                         <th>Complemento</th>
                                        
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {usuarios.map(usuario => (
-                                        <tr key={usuario.id}>
-                                            <td>{usuario.id}</td>
-                                            <td>{usuario.nome}</td>
-                                            <td>{usuario.celular}</td>
-                                            <td>{usuario.email}</td>
-                                            <td>{usuario.cpf}</td>
-                                            <td>{usuario.dataNascimento}</td>
-                                            <td>{usuario.cidade}</td>
-                                            <td>{usuario.estado}</td>
-                                            <td>{usuario.pais}</td>
-                                            <td>{usuario.rua}</td>
-                                            <td>{usuario.numero}</td>
-                                            <td>{usuario.bairro}</td>
-                                            <td>{usuario.cep}</td>  
-                                            <td>{usuario.complemento}</td>
-                                            <td>{}</td>
+                                    {profissionais.map(profissionais => (
+                                        <tr key={profissionais.id}>
+                                            <td>{profissionais.id}</td>
+                                            <td>{profissionais.nome}</td>
+                                            <td>{profissionais.celular}</td>
+                                            <td>{profissionais.email}</td>
+                                            <td>{profissionais.cpf}</td>
+                                            <td>{profissionais.dataNascimento}</td>
+                                            <td>{profissionais.cidade}</td>
+                                            <td>{profissionais.estado}</td>
+                                            <td>{profissionais.pais}</td>
+                                            <td>{profissionais.rua}</td>
+                                            <td>{profissionais.numero}</td>
+                                            <td>{profissionais.bairro}</td>
+                                            <td>{profissionais.cep}</td>  
+                                            <td>{profissionais.salario}</td>
+                                            <td>{profissionais.complemento}</td>
+                                          
                                            
                                           
                                             <td>
@@ -146,4 +147,4 @@ const Listagem = () => {
     );
 }
 
-export default Listagem
+export default ListagemProfissional

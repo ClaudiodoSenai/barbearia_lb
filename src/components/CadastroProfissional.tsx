@@ -50,7 +50,7 @@ const CadastroProfissional = () => {
         }
 
         console.log(dados);
-        axios.post('http://127.0.0.1:8000/api/cliente/store',
+        axios.post('http://127.0.0.1:8000/api/profissional/store',
             dados, {
             headers: {
                 "Accept": "application/json",
@@ -62,7 +62,7 @@ const CadastroProfissional = () => {
                 console.log(response.data.error);
             }
             else{
-                window.location.href = "/ListagemClientes"
+                window.location.href = "/ListagemProfissionais"
             }
         }).catch(function (error) {
             console.log(error);
@@ -139,7 +139,7 @@ const CadastroProfissional = () => {
                     <div className='card'>
                         <div className='card-body'>
                             <h5 className='card-title'>
-                                Cadastrar Cliente
+                                Cadastrar Profissional
                             </h5>
                             <form onSubmit={cadastrarProfissional} className='row g-3'>
                                 <div className='col-4'>
@@ -204,12 +204,12 @@ const CadastroProfissional = () => {
                                     <input type="text" name='salario' className='form-control' required onChange={handleState} />
                                 </div>
 
-                                <div className='col-6'>
+                                <div className='col-4'>
                                     <label htmlFor="complemento" className='form-label'>Complemento</label>
                                     <input type="text" name='complemento' className='form-control' required onChange={handleState} />
                                 </div>
 
-                                <div className='col-6'>
+                                <div className='col-4'>
                                     <label htmlFor="senha" className='form-label'>Senha</label>
                                     <input type="password" name='senha' className='form-control' required onChange={handleState} />
                                 </div>

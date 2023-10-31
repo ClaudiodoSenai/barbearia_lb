@@ -4,11 +4,11 @@
     padding: 2em;
 }
 
-
-.main h2 {
-    margin-bottom: 0.8em;
+.main h2{
+    margin-bottom: 0.8;
 }
 
-.error {
-    color: red
+.error{
+    color: #DC143C;
+
 }
