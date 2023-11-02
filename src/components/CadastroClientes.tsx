@@ -61,7 +61,7 @@ const Cadastro = () => {
                 console.log(response.data.error);
             }
             else{
-                window.location.href = "/ListagemClientes"
+                window.location.href = "/Listagem/Cliente"
             }
         }).catch(function (error) {
             console.log(error);

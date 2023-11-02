@@ -1,19 +1,12 @@
-import React, {
-    Component, useState,
-    ChangeEvent, FormEvent,
-    useEffect
-} from 'react';
-
-
-import styles from "../App.module.css"
 import axios from 'axios';
-import { CadastroClientesInterface } from '../interfaces/CadastroClientesInterfaces';
+import React, { Component, useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import styles from "../App.module.css";
+import { CadastroServicos } from '../interfaces/CadastroServicosInterfaces';
 
-const Listagem = () => {
-
-    const [usuarios, setUsuarios] = useState<CadastroClientesInterface[]>([]);
+const ListagemServicos = () => {
+    const [servicos, setServicos] = useState<CadastroServicos[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
-    const [erro, setError] = useState("");
+    const [error, setError] = useState("");
 
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "pesquisa") {
@@ -26,23 +19,26 @@ const Listagem = () => {
 
         async function fetchData() {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/cliente/find/nome',
-                    {nome:pesquisa},
+
+                const response = await axios.post('http://127.0.0.1:8000/api/find/nome',
+                    { nome: pesquisa },
                     {
                         headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json"
                         }
-
                     }).then(function (response) {
                         if(response.data.status === true){
-                            setUsuarios(response.data.data)
+                            setServicos(response.data.data);
                         } else { 
-                            setUsuarios([])
+                            setServicos([])
                         }
+                       
                     }).catch(function (error) {
                         console.log(error);
                     });
+
+
             } catch (error) {
                 console.log(error);
             }
@@ -53,89 +49,61 @@ const Listagem = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/cliente/all');
-                setUsuarios(response.data.data);
+                const response = await axios.get('http://127.0.0.1:8000/api/all/servico');
+                setServicos(response.data.data)
             } catch (error) {
                 setError("Ocorreu um erro");
                 console.log(error);
             }
-
         }
-
         fetchData();
     }, []);
-
     return (
         <div>
             <main className={styles.main}>
                 <div className='container'>
-
                     <div className='col-md mb-3'>
                         <div className='card'>
                             <div className='card-body'>
-                                <h5 className='card-title'>Pesquisar</h5>
+                                <h5 className='card-little'>Pesquisar</h5>
                                 <form onSubmit={buscar} className='row'>
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
-
                                     </div>
                                     <div className='col-1'>
-                                        <button type='submit' className='btn btn-success'> Pesquisar </button>
+                                        <button type='submit' className='btn btn-success'>Pesquisar</button>
+
                                     </div>
                                 </form>
 
                             </div>
-
                         </div>
-
                     </div>
-
                     <div className='card'>
                         <div className='card-body'>
-                            <h5 className='card-title'>Listagem de Usuarios</h5>
-                            <table className='table table-striped'>
+                            <h5 className='card-title'>Listagem de Serviços</h5>
+                            <table className='table table-hover'>
                                 <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Nome</th>
-                                        <th>Celular</th>
-                                        <th>E-mail</th>
-                                        <th>CPF</th>
-                                        <th>Data de Nasciemento</th>
-                                        <th>Cidade</th>
-                                        <th>Estado</th>
-                                        <th>Pais</th>
-                                        <th>Rua</th>
-                                        <th>Numero</th>
-                                      
-                                        <th>Cep</th>
-                                     
-                                       
+                                        <th>Preço</th>
+                                        <th>Descrição</th>
+                                        <th>Duração</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {usuarios.map(usuario => (
+                                    {servicos.map(usuario => (
                                         <tr key={usuario.id}>
                                             <td>{usuario.id}</td>
                                             <td>{usuario.nome}</td>
-                                            <td>{usuario.celular}</td>
-                                            <td>{usuario.email}</td>
-                                            <td>{usuario.cpf}</td>
-                                            <td>{usuario.dataNascimento}</td>
-                                            <td>{usuario.cidade}</td>
-                                            <td>{usuario.estado}</td>
-                                            <td>{usuario.pais}</td>
-                                            <td>{usuario.rua}</td>
-                                            <td>{usuario.numero}</td>
-                                           
-                                            <td>{usuario.cep}</td>  
-                                        
-                                           
-                                          
+                                            <td>{usuario.preco}</td>
+                                            <td>{usuario.descricao}</td>
+                                            <td>{usuario.duracao}</td>
                                             <td>
                                                 <a href="#" className='btn btn-primary btn-sm'>Editar</a>
-                                                <a href="#" className='btn btn-danger btn-sm '>Excluir</a>
+                                                <a href="#" className='btn btn-danger btn-sm'>Excluir</a>
                                             </td>
                                         </tr>
                                     ))}
@@ -149,4 +117,4 @@ const Listagem = () => {
     );
 }
 
-export default Listagem
+export default ListagemServicos;

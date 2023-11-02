@@ -43,10 +43,10 @@ const CadastroProfissional = () => {
             numero: numero,
             bairro: bairro,
             cep: cep,
-            complemento: complemento, 
-            salario:salario,
+            complemento: complemento,
+            salario: salario,
             senha: senha
-          
+
         }
 
         console.log(dados);
@@ -57,12 +57,12 @@ const CadastroProfissional = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            if(response.data.success == false){
+            if (response.data.success == false) {
                 console.log("error");
                 console.log(response.data.error);
             }
-            else{
-                window.location.href = "/ListagemProfissionais"
+            else {
+                window.location.href = "/Listagem/Profissional  "
             }
         }).catch(function (error) {
             console.log(error);
@@ -129,8 +129,10 @@ const CadastroProfissional = () => {
         if (e.target.name === "senha") {
             setSenha(e.target.value)
         }
+    }
 
-         const findCep = (e: FormEvent) => {
+
+    const findCepProfissional = (e: FormEvent) => {
         e.preventDefault();
 
         fetch('https://viacep.com.br/ws/' + cep + '/json/',
@@ -144,30 +146,11 @@ const CadastroProfissional = () => {
                     setCep(data.cep);
                     setEstado(data.uf);
                 }
-                    
-            ).catch(error => {
-                
-            });
-    }
-    const findCep = (e: FormEvent) => {
-        e.preventDefault();
 
-        fetch('https://viacep.com.br/ws/' + cep + '/json/',
-            {
-                method: 'GET'
-            }).then(response => response.json())
-            .then(
-                data => {
-                    console.log(data)
-                    setCidade(data.localidade);
-                    setCep(data.cep);
-                    setEstado(data.uf);
-                }
-                    
             ).catch(error => {
-                
+
             });
-    }
+
     }
     return (
         <div>
@@ -199,17 +182,22 @@ const CadastroProfissional = () => {
 
                                 <div className='col-4'>
                                     <label htmlFor="dataNascimento" className='form-label'>Data de nascimento</label>
-                                    <input type="text" name='dataNascimento' className='form-control' required onChange={handleState} />
+                                    <input type="date" name='dataNascimento' className='form-control' required onChange={handleState} />
+                                </div>
+
+                                <div className='col-4'>
+                                    <label htmlFor="cep" className='form-label'>Cep</label>
+                                    <input type="text" name='cep' className='form-control' onBlur={findCepProfissional} onChange={handleState} />
                                 </div>
 
                                 <div className='col-4'>
                                     <label htmlFor="cidade" className='form-label'>Cidade</label>
-                                    <input type="text" name='cidade' className='form-control' required onChange={handleState} />
+                                    <input type="text" name='cidade' value={cidade} className='form-control' required onChange={handleState} />
                                 </div>
 
                                 <div className='col-4'>
                                     <label htmlFor="estado" className='form-label'>Estado</label>
-                                    <input type="text" name='estado' className='form-control' required onChange={handleState} />
+                                    <input type="text" name='estado' value={estado} className='form-control' required onChange={handleState} />
                                 </div>
 
                                 <div className='col-4'>
@@ -218,7 +206,7 @@ const CadastroProfissional = () => {
                                 </div>
 
                                 <div className='col-4'>
-                                    <label htmlFor="rua" className='form-label'>Rua</label>
+                                    <label htmlFor="rua" className='form-label'> Rua</label>
                                     <input type="text" name='rua' className='form-control' required onChange={handleState} />
                                 </div>
 
@@ -230,11 +218,6 @@ const CadastroProfissional = () => {
                                 <div className='col-4'>
                                     <label htmlFor="bairro" className='form-label'>Bairro</label>
                                     <input type="text" name='bairro' className='form-control' required onChange={handleState} />
-                                </div>
-
-                                <div className='col-4'>
-                                    <label htmlFor="cep" className='form-label'>Cep</label>
-                                    <input type="text" name='cep' className='form-control' required onBlur={findCep} onChange={handleState} />
                                 </div>
 
                                 <div className='col-4'>
