@@ -11,6 +11,7 @@ import Listagem from "../components/ListagemClientes";
 import ListagemProfissional from "../components/ListagemProfissional";
 import CadastroServicos from "../components/CadastroServicos";
 import ListagemServicos from "../components/ListagemServicos";
+import UpdateClientes from "../components/UpdateClientes";
 
 
 const AppRouter = () => {
@@ -34,6 +35,9 @@ const AppRouter = () => {
 
                 <Route path="/Listagem/Servicos"
                     element={<ListagemServicos />} />
+
+                <Route path="/Atualizar/Cliente"
+                    element={<UpdateClientes />} />
 
             </Routes>
         </BrowserRouter>

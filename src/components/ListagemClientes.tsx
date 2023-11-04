@@ -106,8 +106,7 @@ const Listagem = () => {
                                         <th>Estado</th>
                                         <th>Pais</th>
                                         <th>Rua</th>
-                                        <th>Numero</th>
-                                      
+                                        <th>Numero</th>      
                                         <th>Cep</th>
                                      
                                        
@@ -127,14 +126,13 @@ const Listagem = () => {
                                             <td>{usuario.estado}</td>
                                             <td>{usuario.pais}</td>
                                             <td>{usuario.rua}</td>
-                                            <td>{usuario.numero}</td>
-                                           
+                                            <td>{usuario.numero}</td>                                          
                                             <td>{usuario.cep}</td>  
                                         
                                            
                                           
                                             <td>
-                                                <a href="#" className='btn btn-primary btn-sm'>Editar</a>
+                                                <a href="/Atualizar/Cliente" className='btn btn-primary btn-sm'>Editar</a>
                                                 <a href="#" className='btn btn-danger btn-sm '>Excluir</a>
                                             </td>
                                         </tr>
