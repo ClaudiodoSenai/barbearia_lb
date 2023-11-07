@@ -7,6 +7,7 @@ import Footer from './Footer';
 import Header from './Header';
 import styles from '../App.module.css'
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 
@@ -58,13 +59,32 @@ const Cadastro = () => {
             
             if(response.data.success == false){
                 console.log("error");
+                Swal.fire({
+                    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5Jsocn7nR5td7m7MMOe2IYvfLm9GyEk3G9xNOmuGx&s",
+                    imageHeight: 800,
+                    imageAlt: "A tall image",
+                    title: "Erro",
+                    text: "O cliente não foi cadastrado",
+                    icon: "error",
+                    timer:6000
+                  });
                 console.log(response.data.error);
             }
             else{
+                Swal.fire({
+                    imageUrl: "hhttps://pbs.twimg.com/profile_images/989490909103390727/wIxiGJoF_400x400.jpgttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5Jsocn7nR5td7m7MMOe2IYvfLm9GyEk3G9xNOmuGx&s",
+                    imageHeight: 800,
+                    imageAlt: "A tall image",
+                    title: "Cadastrado",
+                    text: "O cliente foi cadastrado com sucesso",
+                    icon: "success",
+                    timer:6000
+                  });
                 window.location.href = "/Listagem/Cliente"
             }
         }).catch(function (error) {
             console.log(error);
+            
         });
     }
 

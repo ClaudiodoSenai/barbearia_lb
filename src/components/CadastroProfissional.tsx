@@ -57,7 +57,7 @@ const CadastroProfissional = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            if (response.data.success == false) {
+            if (response.data.success === false) {
                 console.log("error");
                 console.log(response.data.error);
             }

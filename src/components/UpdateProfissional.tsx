@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 
 
 
-const UpdateClientes = () => {
+const UpdateProfissional = () => {
 
     const [id, setId] = useState<number>();
     const [nome, setNome] = useState<string>("");
@@ -27,11 +27,11 @@ const UpdateClientes = () => {
     const [bairro, setBairro] = useState<string>("");
     const [cep, setCep] = useState<string>("");
     const [complemento, setComplemento] = useState<string>("");
- 
+    const [salario, setSalario] = useState<string>("");
 
     const parametro = useParams();
 
-    const updateClientes = (e: FormEvent) => {
+    const updateProfissional = (e: FormEvent) => {
         e.preventDefault()
         const dados = {
             id: id,
@@ -48,18 +48,18 @@ const UpdateClientes = () => {
             bairro: bairro,
             cep: cep,
             complemento: complemento,
-    
+            salario:salario
 
         }
-
-        axios.put('http://127.0.0.1:8000/api/cliente/update',
+console.log(dados)
+        axios.put("http://127.0.0.1:8000/api/profissional/update",
             dados, {
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json"
+                "Content-Type":"application/json"
             }
         }).then(function (response) {
-            window.location.href = "/Listagem/Cliente"
+            window.location.href = "/Listagem/Profissional"
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });
@@ -70,7 +70,7 @@ const UpdateClientes = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/cliente/find/" + parametro.id);
+                const response = await axios.get("http://127.0.0.1:8000/api/profissional/find/" + parametro.id);
                 setId(response.data.data.id);
                 setNome(response.data.data.nome);
                 setCelular(response.data.data.celular);
@@ -85,7 +85,7 @@ const UpdateClientes = () => {
                 setBairro(response.data.data.bairro);
                 setCep(response.data.data.cep);
                 setComplemento(response.data.data.complemento);
-
+                setSalario(response.data.data.salario);
             } catch {
                 console.log("Erro ao buscar dados da api")
             }
@@ -150,10 +150,13 @@ const UpdateClientes = () => {
         }
 
 
+        if (e.target.name === "salario") {
+            setSalario(e.target.value)
+        }
     }
 
 
-    const findCepUpdateClientes = (e: FormEvent) => {
+    const findCepUpdateProfissional = (e: FormEvent) => {
         e.preventDefault();
 
         fetch('https://viacep.com.br/ws/' + cep + '/json/',
@@ -183,7 +186,7 @@ const UpdateClientes = () => {
                             <h5 className='card-title'>
                                 Atualizar Dados Do Usuário
                             </h5>
-                            <form onSubmit={updateClientes} className='row g-3'>
+                            <form onSubmit={updateProfissional} className='row g-3'>
 
                                 <div className='col-4'>
                                     <label htmlFor="nome" className='form-label'>Nome</label>
@@ -209,7 +212,7 @@ const UpdateClientes = () => {
 
                                 <div className='col-4'>
                                     <label htmlFor="cep" className='form-label'>Cep</label>
-                                    <input type="text" name='cep' className='form-control' value={cep} onBlur={findCepUpdateClientes} onChange={handleState} />
+                                    <input type="text" name='cep' className='form-control' value={cep} onBlur={findCepUpdateProfissional} onChange={handleState} />
                                 </div>
 
                                 <div className='col-4'>
@@ -248,6 +251,13 @@ const UpdateClientes = () => {
                                     <input type="text" name='complemento' value={complemento} className='form-control' required onChange={handleState} />
                                 </div>
 
+                                
+                                <div className='col-4'>
+                                    <label htmlFor="salario" className='form-label'>Salario</label>
+                                    <input type="text" name='salario' value={salario} className='form-control' required onChange={handleState} />
+                                </div>
+
+
                                 <div className='col-12'>
                                     <button type='submit' className='btn btn-success btn-sm' > Atualizar</button>
                                 </div>
@@ -263,4 +273,4 @@ const UpdateClientes = () => {
     );
 }
 
-export default UpdateClientes
+export default UpdateProfissional

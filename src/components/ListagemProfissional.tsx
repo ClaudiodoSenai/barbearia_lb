@@ -8,6 +8,7 @@ import React, {
 import styles from "../App.module.css"
 import axios from 'axios';
 import { CadastroProfissionalInterface } from '../interfaces/CadastroProfissionalInterfaces';
+import { Link } from 'react-router-dom';
 
 const ListagemProfissional = () => {
 
@@ -123,7 +124,7 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.celular}</td>
                                             <td>{profissionais.email}</td>
                                             <td>{profissionais.cpf}</td>
-                                         
+
                                             <td>{profissionais.cidade}</td>
                                             <td>{profissionais.estado}</td>
                                             <td>{profissionais.pais}</td>
@@ -137,7 +138,7 @@ const ListagemProfissional = () => {
                                            
                                           
                                             <td>
-                                                <a href="#" className='btn btn-primary btn-sm'>Editar</a>
+                                            <Link to={"/Atualizar/Profissional/"+ profissionais.id}  className='btn btn-primary btn-sm'>Editar</Link>
                                                 <a href="#" className='btn btn-danger btn-sm '>Excluir</a>
                                             </td>
                                         </tr>
