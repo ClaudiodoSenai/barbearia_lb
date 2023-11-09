@@ -8,7 +8,7 @@ import React, {
 import styles from "../App.module.css"
 import axios from 'axios';
 import { CadastroProfissionalInterface } from '../interfaces/CadastroProfissionalInterfaces';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const ListagemProfissional = () => {
 
@@ -21,14 +21,31 @@ const ListagemProfissional = () => {
             setPesquisa(e.target.value);
         }
     }
+    const { id } = useParams()
+    const deletarProfissional = (id: number) => {
+        axios.delete('http://127.0.0.1:8000/api/profissional/delete/' + id).then(function (response) {
+            console.log(response.data);
+            alert("Deletado com sucesso");
 
+            async function fetchData() {
+                try {
+                    const response = await axios.get('http://127.0.0.1:8000/api/profissional/all');
+                    setProfissional(response.data.data);
+                } catch (error) {
+                    setError("Ocorreu um erro");
+                    console.log(error);
+                }
+            }
+            fetchData();
+        })
+    }
     const buscar = (e: FormEvent) => {
         e.preventDefault();
 
         async function fetchData() {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/api/profissional/find/nome',
-                    {nome:pesquisa},
+                    { nome: pesquisa },
                     {
                         headers: {
                             "Accept": "application/json",
@@ -36,9 +53,9 @@ const ListagemProfissional = () => {
                         }
 
                     }).then(function (response) {
-                        if(response.data.status === true){
+                        if (response.data.status === true) {
                             setProfissional(response.data.data)
-                        } else { 
+                        } else {
                             setProfissional([])
                         }
                     }).catch(function (error) {
@@ -102,7 +119,7 @@ const ListagemProfissional = () => {
                                         <th>Celular</th>
                                         <th>E-mail</th>
                                         <th>CPF</th>
-                                     
+
                                         <th>Cidade</th>
                                         <th>Estado</th>
                                         <th>Pais</th>
@@ -110,9 +127,9 @@ const ListagemProfissional = () => {
                                         <th>Numero</th>
                                         <th>Bairro</th>
                                         <th>Cep</th>
-                                    
-                                        
-                                       
+
+
+
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -131,15 +148,15 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.rua}</td>
                                             <td>{profissionais.numero}</td>
                                             <td>{profissionais.bairro}</td>
-                                            <td>{profissionais.cep}</td>  
-                                           
-                                          
-                                          
-                                           
-                                          
+                                            <td>{profissionais.cep}</td>
+
+
+
+
+
                                             <td>
-                                            <Link to={"/Atualizar/Profissional/"+ profissionais.id}  className='btn btn-primary btn-sm'>Editar</Link>
-                                                <a href="#" className='btn btn-danger btn-sm '>Excluir</a>
+                                                <Link to={"/Atualizar/Profissional/" + profissionais.id} className='btn btn-primary btn-sm'>Editar</Link>
+                                                <button onClick={() => deletarProfissional(profissionais.id)} className="btn btn-danger btn-sm">Excluir</button>
                                             </td>
                                         </tr>
                                     ))}

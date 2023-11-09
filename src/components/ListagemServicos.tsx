@@ -15,12 +15,28 @@ const ListagemServicos = () => {
         }
     }
 
+    const deletarServico = (id: number) => {
+        axios.delete('http://127.0.0.1:8000/api/delete/' + id).then(function (response) {
+            console.log(response.data);
+            alert("Deletado com sucesso");
+
+            async function fetchData() {
+                try {
+                    const response = await axios.get('http://127.0.0.1:8000/api/all/servico');
+                    setServicos(response.data.data);
+                } catch (error) {
+                    setError("Ocorreu um erro");
+                    console.log(error);
+                }
+            }
+            fetchData();
+        })
+    }
+
     const buscar = (e: FormEvent) => {
         e.preventDefault();
-
         async function fetchData() {
             try {
-
                 const response = await axios.post('http://127.0.0.1:8000/api/find/nome',
                     { nome: pesquisa },
                     {
@@ -29,17 +45,14 @@ const ListagemServicos = () => {
                             "Content-Type": "application/json"
                         }
                     }).then(function (response) {
-                        if(response.data.status === true){
+                        if (response.data.status === true) {
                             setServicos(response.data.data);
-                        } else { 
+                        } else {
                             setServicos([])
                         }
-                       
                     }).catch(function (error) {
                         console.log(error);
                     });
-
-
             } catch (error) {
                 console.log(error);
             }
@@ -59,6 +72,7 @@ const ListagemServicos = () => {
         }
         fetchData();
     }, []);
+
     return (
         <div>
             <main className={styles.main}>
@@ -68,15 +82,14 @@ const ListagemServicos = () => {
                             <div className='card-body'>
                                 <h5 className='card-little'>Pesquisar</h5>
                                 <form onSubmit={buscar} className='row'>
+                                    
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
                                     </div>
                                     <div className='col-1'>
                                         <button type='submit' className='btn btn-success'>Pesquisar</button>
-
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -103,8 +116,8 @@ const ListagemServicos = () => {
                                             <td>{usuario.descricao}</td>
                                             <td>{usuario.duracao}</td>
                                             <td>
-                                            <Link to={"/Atualizar/Servico/"+ usuario.id}  className='btn btn-primary btn-sm'>Editar</Link>
-                                                <a href="#" className='btn btn-danger btn-sm'>Excluir</a>
+                                                <Link to={"/Atualizar/Servico/" + usuario.id} className='btn btn-primary btn-sm'>Editar</Link>
+                                                <button onClick={() => deletarServico (usuario.id)} className="btn btn-danger btn-sm">Excluir</button>
                                             </td>
                                         </tr>
                                     ))}
