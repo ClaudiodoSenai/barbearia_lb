@@ -8,7 +8,7 @@ import React, {
 import styles from "../App.module.css"
 import axios from 'axios';
 import { CadastroClientesInterface } from '../interfaces/CadastroClientesInterfaces';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Listagem = () => {
 
@@ -16,9 +16,26 @@ const Listagem = () => {
     const [pesquisa, setPesquisa] = useState<string>('');
     const [erro, setError] = useState("");
 
+    const { id } = useParams()
+    const deletarCliente = (id: number) => {
+        axios.delete('http://127.0.0.1:8000/api/cliente/delete/' + id).then(function (response) {
+            console.log(response.data);
+            alert("Deletado com sucesso");
+
+            async function fetchData() {
+                try {
+                    const response = await axios.get('http://127.0.0.1:8000/api/cliente/all');
+                    setUsuarios(response.data.data);
+                } catch (error) {
+                    setError("Ocorreu um erro");
+                    console.log(error);
+                }
+            }
+            fetchData();
+        })
+    }
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "pesquisa") {
-            setPesquisa(e.target.value);
         }
     }
 
@@ -28,7 +45,7 @@ const Listagem = () => {
         async function fetchData() {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/api/cliente/find/nome',
-                    {nome:pesquisa},
+                    { nome: pesquisa },
                     {
                         headers: {
                             "Accept": "application/json",
@@ -36,9 +53,9 @@ const Listagem = () => {
                         }
 
                     }).then(function (response) {
-                        if(response.data.status === true){
+                        if (response.data.status === true) {
                             setUsuarios(response.data.data)
-                        } else { 
+                        } else {
                             setUsuarios([])
                         }
                     }).catch(function (error) {
@@ -62,7 +79,6 @@ const Listagem = () => {
             }
 
         }
-
         fetchData();
     }, []);
 
@@ -70,27 +86,24 @@ const Listagem = () => {
         <div>
             <main className={styles.main}>
                 <div className='container'>
-
                     <div className='col-md mb-3'>
                         <div className='card'>
                             <div className='card-body'>
                                 <h5 className='card-title'>Pesquisar</h5>
                                 <form onSubmit={buscar} className='row'>
+
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
-
                                     </div>
+
                                     <div className='col-1'>
                                         <button type='submit' className='btn btn-success'> Pesquisar </button>
                                     </div>
+
                                 </form>
-
                             </div>
-
                         </div>
-
                     </div>
-
                     <div className='card'>
                         <div className='card-body'>
                             <h5 className='card-title'>Listagem de Usuarios</h5>
@@ -107,10 +120,8 @@ const Listagem = () => {
                                         <th>Estado</th>
                                         <th>Pais</th>
                                         <th>Rua</th>
-                                        <th>Numero</th>      
+                                        <th>Numero</th>
                                         <th>Cep</th>
-                                     
-                                       
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -127,14 +138,11 @@ const Listagem = () => {
                                             <td>{usuario.estado}</td>
                                             <td>{usuario.pais}</td>
                                             <td>{usuario.rua}</td>
-                                            <td>{usuario.numero}</td>                                          
-                                            <td>{usuario.cep}</td>  
-                                        
-                                           
-                                          
+                                            <td>{usuario.numero}</td>
+                                            <td>{usuario.cep}</td>
                                             <td>
-                                                <Link to={"/Atualizar/Cliente/"+ usuario.id}  className='btn btn-primary btn-sm'>Editar</Link>
-                                                <a href="#" className='btn btn-danger btn-sm '>Excluir</a>
+                                                <Link to={"/Atualizar/Cliente/" + usuario.id} className='btn btn-primary btn-sm'>Editar</Link>
+                                                <button onClick={() => deletarCliente(usuario.id)} className="btn btn-danger">Excluir</button>
                                             </td>
                                         </tr>
                                     ))}
