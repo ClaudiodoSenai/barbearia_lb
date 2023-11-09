@@ -48,15 +48,15 @@ const UpdateProfissional = () => {
             bairro: bairro,
             cep: cep,
             complemento: complemento,
-            salario:salario
+            salario: salario
 
         }
-console.log(dados)
-        axios.put("http://127.0.0.1:8000/api/profissional/update",
+        console.log(dados)
+        axios.put('http://127.0.0.1:8000/api/profissional/update',
             dados, {
             headers: {
                 "Accept": "application/json",
-                "Content-Type":"application/json"
+                "Content-Type": "application/json"
             }
         }).then(function (response) {
             window.location.href = "/Listagem/Profissional"
@@ -251,7 +251,7 @@ console.log(dados)
                                     <input type="text" name='complemento' value={complemento} className='form-control' required onChange={handleState} />
                                 </div>
 
-                                
+
                                 <div className='col-4'>
                                     <label htmlFor="salario" className='form-label'>Salario</label>
                                     <input type="text" name='salario' value={salario} className='form-control' required onChange={handleState} />
