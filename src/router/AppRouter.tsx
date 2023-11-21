@@ -14,6 +14,9 @@ import ListagemServicos from "../components/ListagemServicos";
 import UpdateClientes from "../components/UpdateClientes";
 import UpdateProfissional from "../components/UpdateProfissional";
 import UpdateServicos from "../components/UpdateServico";
+import CadastroAgenda from "../components/CadastroAgenda";
+import ListagemAgenda from "../components/ListagemAgenda";
+import UpdateCadastroAgenda from "../components/UpdateAgenda";
 
 
 const AppRouter = () => {
@@ -44,8 +47,19 @@ const AppRouter = () => {
                 <Route path="/Atualizar/Profissional/:id"
                     element={<UpdateProfissional />} />
 
-                    <Route path="/Atualizar/Servico/:id"
+                <Route path="/Atualizar/Servico/:id"
                     element={<UpdateServicos />} />
+
+<Route path="/Atualizar/Hora/:id"
+                    element={<UpdateCadastroAgenda />} />
+
+                <Route path="/Cadastro/Agenda"
+                 element={<CadastroAgenda />} />
+
+
+                <Route path="/Listagem/Agenda" 
+                element={<ListagemAgenda />} />
+
             </Routes>
         </BrowserRouter>
     )

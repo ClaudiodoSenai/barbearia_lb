@@ -39,7 +39,7 @@ const Listagem = () => {
         }
     }
 
-    const buscar = (e: FormEvent) => {
+    const buscarHorario = (e: FormEvent) => {
         e.preventDefault();
 
         async function fetchData() {
@@ -90,7 +90,7 @@ const Listagem = () => {
                         <div className='card'>
                             <div className='card-body'>
                                 <h5 className='card-title'>Pesquisar</h5>
-                                <form onSubmit={buscar} className='row'>
+                                <form onSubmit={buscarHorario} className='row'>
 
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
