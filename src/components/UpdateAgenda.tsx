@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 
 const UpdateCadastroAgenda = () => {
-
+    const [id, setId] = useState<number>();
     const [profissional_id, setProfissional_id] = useState<string>("");
     const [data_hora, setData_hora] = useState<string>("");
     const parametro = useParams();
@@ -15,28 +15,50 @@ const UpdateCadastroAgenda = () => {
         e.preventDefault();
 
         const dados = {
+            id: id,
             profissional_id: profissional_id,
             data_hora: data_hora
         }
 
-        axios.put('http://127.0.0.1:8000/api/cliente/update',
-        dados, {
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    }).then(function (response) {
-        window.location.href = "/Listagem/Cliente"
-    }).catch(function (error) {
-        console.log("Ocorreu um erro ao atualizar");
-    });
-}
+        axios.put("http://127.0.0.1:8000/api/atualizar/horarios", dados, {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.data.status === true) {
+                Swal.fire({
+                    title: "Horario Atualizado",
+                    text: "Agenda atualizada com sucesso",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+                window.setTimeout(() => {
+                    window.location.href = "/Listagem/Agenda";
+                }, 1000);
+            } else {
+                console.log("error");
+                console.log(response.data.error);
+                Swal.fire({
+                    title: "Erro",
+                    text: "Erro ao atualizar horario!",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }).catch(function (error) {
+            console.log("Ocorreu um erro ao atualizar");
+        });
+    }
 
 
         useEffect(() => {
             async function fetchData() {
                 try {
                     const response = await axios.get("http://127.0.0.1:8000/api/agenda/find/horario/" + parametro.id);
+                    setId(response.data.data.id);
                     setData_hora(response.data.data.data_hora);
                     setProfissional_id(response.data.data.profissional_id);
 
@@ -50,6 +72,7 @@ const UpdateCadastroAgenda = () => {
 
     
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
+
         if (e.target.name === "profissional_id") {
             setProfissional_id(e.target.value);
         }
@@ -66,6 +89,8 @@ const UpdateCadastroAgenda = () => {
                         <div className='card-body'>
                             <h5 className='card-title'>Cadastrar Agendamento</h5>
                             <form onSubmit={updateCadastrarAgenda} className='row g-3'>
+
+
                                 <div className='col-6'>
                                     <label htmlFor='profissional_id' className='form-label'>ID do Profissional</label>
                                     <input type="number" name='profissional_id' value={profissional_id} className='form-control' required onChange={handleState} />

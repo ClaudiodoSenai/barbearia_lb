@@ -17,6 +17,7 @@ import UpdateServicos from "../components/UpdateServico";
 import CadastroAgenda from "../components/CadastroAgenda";
 import ListagemAgenda from "../components/ListagemAgenda";
 import UpdateCadastroAgenda from "../components/UpdateAgenda";
+import RecuperarSenha from "../components/RecuperarSenha";
 
 
 const AppRouter = () => {
@@ -50,15 +51,17 @@ const AppRouter = () => {
                 <Route path="/Atualizar/Servico/:id"
                     element={<UpdateServicos />} />
 
-<Route path="/Atualizar/Hora/:id"
+                <Route path="/Atualizar/Hora/:id"
                     element={<UpdateCadastroAgenda />} />
 
                 <Route path="/Cadastro/Agenda"
                  element={<CadastroAgenda />} />
 
-
                 <Route path="/Listagem/Agenda" 
                 element={<ListagemAgenda />} />
+
+                <Route path = "/Atualizar/Senha"
+                element={<RecuperarSenha/>}/>
 
             </Routes>
         </BrowserRouter>

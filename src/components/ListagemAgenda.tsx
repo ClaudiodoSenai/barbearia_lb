@@ -5,6 +5,7 @@ import styles from "../App.module.css";
 import { CadastroAgendaInterface } from '../interfaces/CadastroAgendaInterfaces';
 
 const ListagemAgenda = () => {
+    const [selectedProfessional, setSelectedProfessional] = useState(''); 
     const [horarios, setHorarios] = useState<CadastroAgendaInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [error, setError] = useState("");
@@ -89,6 +90,7 @@ const ListagemAgenda = () => {
                                     </div>
                                     <div className='col-1'>
                                         <button type='submit' className='btn btn-success'>Pesquisar</button>
+                                        
 
                                     </div>
                                 </form>

@@ -15,8 +15,8 @@ const Listagem = () => {
     const [usuarios, setUsuarios] = useState<CadastroClientesInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [erro, setError] = useState("");
-
     const { id } = useParams()
+
     const deletarCliente = (id: number) => {
         axios.delete('http://127.0.0.1:8000/api/cliente/delete/' + id).then(function (response) {
             console.log(response.data);
@@ -34,6 +34,9 @@ const Listagem = () => {
             fetchData();
         })
     }
+
+   
+
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "pesquisa") {
         }
@@ -118,8 +121,7 @@ const Listagem = () => {
                                         <th>Data de Nasciemento</th>
                                         <th>Cidade</th>
                                         <th>Estado</th>
-                                        <th>Pais</th>
-                                        <th>Rua</th>
+                                        <th>Pais</th>                                    
                                         <th>Numero</th>
                                         <th>Cep</th>
                                         <th>Ações</th>
@@ -137,12 +139,12 @@ const Listagem = () => {
                                             <td>{usuario.cidade}</td>
                                             <td>{usuario.estado}</td>
                                             <td>{usuario.pais}</td>
-                                            <td>{usuario.rua}</td>
                                             <td>{usuario.numero}</td>
                                             <td>{usuario.cep}</td>
                                             <td>
                                                 <Link to={"/Atualizar/Cliente/" + usuario.id} className='btn btn-primary btn-sm'>Editar</Link>
                                                 <button onClick={() => deletarCliente(usuario.id)} className="btn btn-danger btn-sm">Excluir</button>
+                                                <Link to={"/Atualizar/Senha"} className='btn btn-primary btn-sm'>Atualizar senha</Link>
                                             </td>
                                         </tr>
                                     ))}
