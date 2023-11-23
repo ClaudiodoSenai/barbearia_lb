@@ -13,13 +13,14 @@ import { useParams } from 'react-router-dom';
 
 
 const RecuperarSenha = () => {
-   
+    const [id, setId] = useState<number>();
     const [email, setEmail] = useState<string>("");
     const parametro = useParams();
    
     const recuperarSenha = (e: FormEvent) => {
         e.preventDefault()
         const dados = {
+            id: id,
             email: email
         }
 
@@ -29,30 +30,11 @@ const RecuperarSenha = () => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
+            
         }).then(function (response) {
-            
-            if(response.data.success == false){
-                console.log("error");
-                Swal.fire({
-                    title: "Erro",
-                    text: "A senha não foi alterada",
-                    icon: "error",
-                    timer:8000
-                  });
-                console.log(response.data.error);
-            }
-            else{
-                Swal.fire({
-                    title: "Cadastrado",
-                    text: "A senha foi alterada para o CPF do cliente",
-                    icon: "success",
-                    timer:10000
-                  });
-                window.location.href = "/Listagem/Cliente"
-            }
+            window.location.href = "/Listagem/Cliente"
         }).catch(function (error) {
-            console.log(error);
-            
+            console.log("Ocorreu um erro ao atualizar");
         });
         console.log(dados);
 
@@ -70,7 +52,6 @@ const RecuperarSenha = () => {
         async function fetchData() {
             try {
                 const response = await axios.get("http://127.0.0.1:8000/api/cliente/find/" + parametro.id);
-             
                 setEmail(response.data.data.email);
               
             } catch {
