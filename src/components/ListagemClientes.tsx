@@ -35,14 +35,34 @@ const Listagem = () => {
         })
     }
 
-   
+    const recuperarSenha = async (id: number) => {
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/cliente/atualizar/senha', {
+                id: id,
+            });
+
+            if (response.data.status === true) {
+                alert("Senha redefinida com sucesso");
+            } else {
+                alert("Ocorreu um erro ao redefinir a senha");
+            }
+        } catch (error) {
+            console.error("Erro ao redefinir a senha", error);
+            alert("Ocorreu um erro ao redefinir a senha. Tente novamente mais tarde.");
+        }
+    };
+
+
 
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "pesquisa") {
+            setPesquisa(e.target.value);
+
+
         }
     }
 
-    const buscarHorario = (e: FormEvent) => {
+    const buscar = (e: FormEvent) => {
         e.preventDefault();
 
         async function fetchData() {
@@ -68,6 +88,7 @@ const Listagem = () => {
                 console.log(error);
             }
         }
+
         fetchData();
     }
 
@@ -93,7 +114,8 @@ const Listagem = () => {
                         <div className='card'>
                             <div className='card-body'>
                                 <h5 className='card-title'>Pesquisar</h5>
-                                <form onSubmit={buscarHorario} className='row'>
+                                <form onSubmit={buscar
+                                } className='row'>
 
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
@@ -121,7 +143,7 @@ const Listagem = () => {
                                         <th>Data de Nasciemento</th>
                                         <th>Cidade</th>
                                         <th>Estado</th>
-                                        <th>Pais</th>                                    
+                                        <th>Pais</th>
                                         <th>Numero</th>
                                         <th>Cep</th>
                                         <th>Ações</th>
@@ -142,9 +164,12 @@ const Listagem = () => {
                                             <td>{usuario.numero}</td>
                                             <td>{usuario.cep}</td>
                                             <td>
-                                                <Link to={"/Atualizar/Cliente/" + usuario.id} className='btn btn-primary btn-sm'>Editar</Link>
-                                                <button onClick={() => deletarCliente(usuario.id)} className="btn btn-danger btn-sm">Excluir</button>
-                                                <Link to={"/Atualizar/Senha"} className='btn btn-primary btn-sm'>Atualizar senha</Link>
+                                                <div className="btn-group" role="group">
+                                                    <Link to={"/Atualizar/Cliente/" + usuario.id} className='btn btn-primary btn-sm'> Editar </Link>
+                                                    <button onClick={() => deletarCliente(usuario.id)} className="btn btn-danger btn-sm"> Excluir </button>
+                                                    <button onClick={() => recuperarSenha(usuario.id)} className="btn btn-primary btn-sm">Recuperar Senha</button>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     ))}

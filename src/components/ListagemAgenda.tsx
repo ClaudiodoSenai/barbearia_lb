@@ -5,7 +5,7 @@ import styles from "../App.module.css";
 import { CadastroAgendaInterface } from '../interfaces/CadastroAgendaInterfaces';
 
 const ListagemAgenda = () => {
-    const [selectedProfessional, setSelectedProfessional] = useState(''); 
+    const [selectedProfessional, setSelectedProfessional] = useState('');
     const [horarios, setHorarios] = useState<CadastroAgendaInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [error, setError] = useState("");
@@ -35,40 +35,39 @@ const ListagemAgenda = () => {
         }
     }
 
-    const buscar = (e: FormEvent) => {
+    const buscar = async (e: FormEvent) => {
         e.preventDefault();
-
-        async function fetchData() {
-            try {
-                const response = await axios.post('http://127.0.0.1:8000/api/agenda/find/data',
-                    { nome: pesquisa },
-                    {
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        }
-
-                    }).then(function (response) {
-                        if (response.data.status === true) {
-                            setHorarios(response.data.data)
-                        } else {
-                            setHorarios([])
-                        }
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-            } catch (error) {
-                console.log(error);
+        try {
+            let apiUrl = 'http://127.0.0.1:8000/api/agenda/find/data';
+            if (selectedProfessional) {
+                apiUrl += `/${selectedProfessional}`;
             }
+            
+            const response = await axios.post(
+                apiUrl,
+                { nome: pesquisa },
+                {
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+            if (response.data.status === true) {
+                setHorarios(response.data.data);
+            } else {
+                setHorarios([]);
+            }
+        } catch (error) {
+            console.log(error);
         }
-        fetchData();
-    }
+    };
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/horarios/profissionais');
-                setHorarios(response.data.data)
+                setHorarios(response.data.data);
             } catch (error) {
                 setError("Ocorreu um erro");
                 console.log(error);
@@ -76,27 +75,29 @@ const ListagemAgenda = () => {
         }
         fetchData();
     }, []);
+
     return (
         <div>
             <main className={styles.main}>
                 <div className='container'>
-                    <div className='col-md mb-3'>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h5 className='card-little'>Pesquisar</h5>
-                                <form onSubmit={buscar} className='row'>
-                                    <div className='col-10'>
-                                        <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
-                                    </div>
-                                    <div className='col-1'>
-                                        <button type='submit' className='btn btn-success'>Pesquisar</button>
-                                        
+                    <div className='col-12'>
+                        <select
+                            className='form-control'
+                            value={selectedProfessional}
+                            onChange={(e) => setSelectedProfessional(e.target.value)}
+                        >
+                            <option value=''>Todos os Profissionais</option>
+                            <option value='1'>Profissional 1</option>
+                            <option value='2'>Profissional 2</option>
+                        </select>
+                    </div>
 
-                                    </div>
-                                </form>
+                    <div className='col-12'>
+                        <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
+                    </div>
 
-                            </div>
-                        </div>
+                    <div className='col-2'>
+                        <button type='submit' className='btn btn-success' onClick={buscar}>Pesquisar</button>
                     </div>
                     <div className='card'>
                         <div className='card-body'>
@@ -118,7 +119,7 @@ const ListagemAgenda = () => {
                                             <td>{horario.data_hora}</td>
                                             <td>
                                                 <Link to={"/Atualizar/Hora/" + horario.id} className='btn btn-primary btn-sm'>Editar</Link>
-                                                <a href="#" onClick={() => deletarHorario(horario.id)}  className='btn btn-danger btn-sm'>Excluir</a>
+                                                <a href="#" onClick={() => deletarHorario(horario.id)} className='btn btn-danger btn-sm'>Excluir</a>
                                             </td>
                                         </tr>
                                     ))}
