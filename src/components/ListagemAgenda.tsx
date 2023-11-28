@@ -13,9 +13,13 @@ const ListagemAgenda = () => {
     const deletarHorario = (id: number) => {
 
         axios.delete('http://127.0.0.1:8000/api/agenda/delete/' + id).then(function (response) {
+       if(response.data.status === true){    
+        console.log(response.data);
+            alert("Deletado com sucesso");}
+        else{
             console.log(response.data);
-            alert("Deletado com sucesso");
-
+            alert("Ocorreu um erro ao deletar");
+        }
             async function fetchData() {
                 try {
                     const response = await axios.get('http://127.0.0.1:8000/api/horarios/profissionais');
