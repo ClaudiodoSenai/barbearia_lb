@@ -5,7 +5,7 @@ import styles from "../App.module.css";
 import { CadastroAgendaInterface } from '../interfaces/CadastroAgendaInterfaces';
 
 const ListagemAgenda = () => {
-    const [selectedProfessional, setSelectedProfessional] = useState('');
+    const [selectedProfissional, setSelectedProfissional] = useState('');
     const [horarios, setHorarios] = useState<CadastroAgendaInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [error, setError] = useState("");
@@ -41,22 +41,19 @@ const ListagemAgenda = () => {
 
     const buscar = async (e: FormEvent) => {
         e.preventDefault();
+    
         try {
-            let apiUrl = 'http://127.0.0.1:8000/api/agenda/find/data';
-            if (selectedProfessional) {
-                apiUrl += `/${selectedProfessional}`;
-            }
-            
             const response = await axios.post(
-                apiUrl,
-                { nome: pesquisa },
+                'http://127.0.0.1:8000/api/agenda/find/data/'+`${selectedProfissional}`,
+                { data_hora: pesquisa },
                 {
                     headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     }
                 }
             );
+    
             if (response.data.status === true) {
                 setHorarios(response.data.data);
             } else {
@@ -64,9 +61,10 @@ const ListagemAgenda = () => {
             }
         } catch (error) {
             console.log(error);
+            // Trate o erro conforme necessário
         }
     };
-
+    
     useEffect(() => {
         async function fetchData() {
             try {
@@ -87,8 +85,8 @@ const ListagemAgenda = () => {
                     <div className='col-12'>
                         <select
                             className='form-control'
-                            value={selectedProfessional}
-                            onChange={(e) => setSelectedProfessional(e.target.value)}
+                            value={selectedProfissional}
+                            onChange={(e) => setSelectedProfissional(e.target.value)}
                         >
                             <option value=''>Todos os Profissionais</option>
                             <option value='1'>Profissional 1</option>

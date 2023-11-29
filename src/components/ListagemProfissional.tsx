@@ -25,8 +25,9 @@ const ListagemProfissional = () => {
     const deletarProfissional = (id: number) => {
         axios.delete('http://127.0.0.1:8000/api/profissional/delete/' + id).then(function (response) {
             console.log(response.data);
+           if(response.data.data.success === true){
             alert("Deletado com sucesso");
-
+}
             async function fetchData() {
                 try {
                     const response = await axios.get('http://127.0.0.1:8000/api/profissional/all');
@@ -119,7 +120,6 @@ const ListagemProfissional = () => {
                                         <th>Celular</th>
                                         <th>E-mail</th>
                                         <th>CPF</th>
-
                                         <th>Cidade</th>
                                         <th>Estado</th>
                                         <th>Pais</th>
@@ -127,9 +127,6 @@ const ListagemProfissional = () => {
                                         <th>Numero</th>
                                         <th>Bairro</th>
                                         <th>Cep</th>
-
-
-
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
