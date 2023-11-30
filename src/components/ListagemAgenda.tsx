@@ -44,8 +44,8 @@ const ListagemAgenda = () => {
     
         try {
             const response = await axios.post(
-                'http://127.0.0.1:8000/api/agenda/find/data/'+`${selectedProfissional}`,
-                { data_hora: pesquisa },
+                'http://127.0.0.1:8000/api/agenda/find/data/',
+                { profissional_id: selectedProfissional, data_hora: pesquisa },
                 {
                     headers: {
                         'Accept': 'application/json',
@@ -88,14 +88,14 @@ const ListagemAgenda = () => {
                             value={selectedProfissional}
                             onChange={(e) => setSelectedProfissional(e.target.value)}
                         >
-                            <option value=''>Todos os Profissionais</option>
+                            <option value='0'>Todos os Profissionais</option>
                             <option value='1'>Profissional 1</option>
                             <option value='2'>Profissional 2</option>
                         </select>
                     </div>
 
                     <div className='col-12'>
-                        <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
+                        <input type="datetime-local" name='pesquisa' className='form-control' onChange={handleState} />
                     </div>
 
                     <div className='col-2'>
