@@ -35,21 +35,9 @@ const CadastroServicos = () => {
             }).then(function (response) {
                 if(response.data.success == false){
                     console.log("error");
-                    Swal.fire({
-                        title: "Erro",
-                        text: "O cliente não foi cadastrado",
-                        icon: "error",
-                        timer:6000
-                      });
                     console.log(response.data.error);
                 }
                 else{
-                    Swal.fire({
-                        title: "Cadastrado",
-                        text: "O cliente foi cadastrado com sucesso",
-                        icon: "success",
-                        timer:6000
-                      });
                     window.location.href = "/Listagem/Servicos"
                 }
             }).catch(function (error) {

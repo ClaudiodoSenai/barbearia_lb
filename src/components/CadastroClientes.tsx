@@ -7,7 +7,7 @@ import Footer from './Footer';
 import Header from './Header';
 import styles from '../App.module.css'
 import axios from 'axios';
-import Swal from 'sweetalert2';
+
 
 
 
@@ -58,22 +58,10 @@ const Cadastro = () => {
         }).then(function (response) {
             
             if(response.data.success == false){
-                console.log("error");
-                Swal.fire({
-                    title: "Erro",
-                    text: "O cliente não foi cadastrado",
-                    icon: "error",
-                    timer:6000
-                  });
+                console.log("error")
                 console.log(response.data.error);
             }
             else{
-                Swal.fire({
-                    title: "Cadastrado",
-                    text: "O cliente foi cadastrado com sucesso",
-                    icon: "success",
-                    timer:6000
-                  });
                 window.location.href = "/Listagem/Cliente"
             }
         }).catch(function (error) {

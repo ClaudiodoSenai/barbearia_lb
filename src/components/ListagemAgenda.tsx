@@ -3,11 +3,13 @@ import React, { Component, useState, ChangeEvent, FormEvent, useEffect } from 'r
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from "../App.module.css";
 import { CadastroAgendaInterface } from '../interfaces/CadastroAgendaInterfaces';
+import { CadastroProfissionalInterface } from '../interfaces/CadastroProfissionalInterfaces';
 
 const ListagemAgenda = () => {
     const [selectedProfissional, setSelectedProfissional] = useState('');
     const [horarios, setHorarios] = useState<CadastroAgendaInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
+    const[profissionais,setProfissionais] = useState<CadastroProfissionalInterface[]>([]);
     const [error, setError] = useState("");
     const { id } = useParams()
     const deletarHorario = (id: number) => {
@@ -61,13 +63,16 @@ const ListagemAgenda = () => {
             }
         } catch (error) {
             console.log(error);
-            // Trate o erro conforme necessário
+
         }
     };
-    
+
     useEffect(() => {
         async function fetchData() {
             try {
+                const profissionalList = await axios.get('http://127.0.0.1:8000/api/profissional/all');
+                setProfissionais(profissionalList.data.data);
+
                 const response = await axios.get('http://127.0.0.1:8000/api/horarios/profissionais');
                 setHorarios(response.data.data);
             } catch (error) {
@@ -83,14 +88,13 @@ const ListagemAgenda = () => {
             <main className={styles.main}>
                 <div className='container'>
                     <div className='col-12'>
-                        <select
-                            className='form-control'
-                            value={selectedProfissional}
-                            onChange={(e) => setSelectedProfissional(e.target.value)}
+                        <select className='form-control' value={selectedProfissional} 
+                        onChange={(e) => setSelectedProfissional(e.target.value)}
                         >
                             <option value='0'>Todos os Profissionais</option>
-                            <option value='1'>Profissional 1</option>
-                            <option value='2'>Profissional 2</option>
+                            {profissionais.map(profissionais => (
+                                 <option key={profissionais.id} value={profissionais.id}>{profissionais.nome}</option>
+                            ))}      
                         </select>
                     </div>
 

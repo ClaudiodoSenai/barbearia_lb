@@ -3,7 +3,7 @@ import Footer from './Footer';
 import Header from './Header';
 import styles from '../App.module.css'
 import axios from 'axios';
-import Swal from 'sweetalert2';
+
 
 const CadastroAgenda = () => {
     // Use state é para verificar o estado 
@@ -31,21 +31,9 @@ const CadastroAgenda = () => {
             
             if(response.data.success == false){
                 console.log("error");
-                Swal.fire({
-                    title: "Erro",
-                    text: "O horario não foi agendado",
-                    icon: "error",
-                    timer:6000
-                  });
                 console.log(response.data.error);
             }
             else{
-                Swal.fire({
-                    title: "Cadastrado",
-                    text: "Horario agendado com sucesso",
-                    icon: "success",
-                    timer:6000
-                  });
                 window.location.href = "/Listagem/Agenda"
             }
         }).catch(function (error) {

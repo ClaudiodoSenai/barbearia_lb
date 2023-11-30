@@ -12,20 +12,25 @@ import { Link, useParams } from 'react-router-dom';
 
 const Listagem = () => {
 
-    const [usuarios, setUsuarios] = useState<CadastroClientesInterface[]>([]);
+    const [clientes, setClientes] = useState<CadastroClientesInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [erro, setError] = useState("");
     const { id } = useParams()
 
     const deletarCliente = (id: number) => {
         axios.delete('http://127.0.0.1:8000/api/cliente/delete/' + id).then(function (response) {
-            console.log(response.data);
-            alert("Deletado com sucesso");
+            if(response.data.status === true){    
+                console.log(response.data);
+                    alert("Deletado com sucesso");}
+                else{
+                    console.log(response.data);
+                    alert("Ocorreu um erro ao deletar");
+                }
 
             async function fetchData() {
                 try {
                     const response = await axios.get('http://127.0.0.1:8000/api/cliente/all');
-                    setUsuarios(response.data.data);
+                    setClientes(response.data.data);
                 } catch (error) {
                     setError("Ocorreu um erro");
                     console.log(error);
@@ -77,9 +82,9 @@ const Listagem = () => {
 
                     }).then(function (response) {
                         if (response.data.status === true) {
-                            setUsuarios(response.data.data)
+                            setClientes(response.data.data)
                         } else {
-                            setUsuarios([])
+                            setClientes([])
                         }
                     }).catch(function (error) {
                         console.log(error);
@@ -96,7 +101,7 @@ const Listagem = () => {
         async function fetchData() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/cliente/all');
-                setUsuarios(response.data.data);
+                setClientes(response.data.data);
             } catch (error) {
                 setError("Ocorreu um erro");
                 console.log(error);
@@ -131,7 +136,7 @@ const Listagem = () => {
                     </div>
                     <div className='card'>
                         <div className='card-body'>
-                            <h5 className='card-title'>Listagem de Usuarios</h5>
+                            <h5 className='card-title'>Listagem de Clientes</h5>
                             <table className='table table-striped'>
                                 <thead>
                                     <tr>
@@ -150,24 +155,24 @@ const Listagem = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {usuarios.map(usuario => (
-                                        <tr key={usuario.id}>
-                                            <td>{usuario.id}</td>
-                                            <td>{usuario.nome}</td>
-                                            <td>{usuario.celular}</td>
-                                            <td>{usuario.email}</td>
-                                            <td>{usuario.cpf}</td>
-                                            <td>{usuario.dataNascimento}</td>
-                                            <td>{usuario.cidade}</td>
-                                            <td>{usuario.estado}</td>
-                                            <td>{usuario.pais}</td>
-                                            <td>{usuario.numero}</td>
-                                            <td>{usuario.cep}</td>
+                                    {clientes.map(cliente => (
+                                        <tr key={cliente.id}>
+                                            <td>{cliente.id}</td>
+                                            <td>{cliente.nome}</td>
+                                            <td>{cliente.celular}</td>
+                                            <td>{cliente.email}</td>
+                                            <td>{cliente.cpf}</td>
+                                            <td>{cliente.dataNascimento}</td>
+                                            <td>{cliente.cidade}</td>
+                                            <td>{cliente.estado}</td>
+                                            <td>{cliente.pais}</td>
+                                            <td>{cliente.numero}</td>
+                                            <td>{cliente.cep}</td>
                                             <td>
                                                 <div className="btn-group" role="group">
-                                                    <Link to={"/Atualizar/Cliente/" + usuario.id} className='btn btn-primary btn-sm'> Editar </Link>
-                                                    <button onClick={() => deletarCliente(usuario.id)} className="btn btn-danger btn-sm"> Excluir </button>
-                                                    <button onClick={() => recuperarSenha(usuario.id)} className="btn btn-primary btn-sm">Recuperar Senha</button>
+                                                    <Link to={"/Atualizar/Cliente/" + cliente.id} className='btn btn-primary btn-sm'> Editar </Link>
+                                                    <button onClick={() => deletarCliente(cliente.id)} className="btn btn-danger btn-sm"> Excluir </button>
+                                                    <button onClick={() => recuperarSenha(cliente.id)} className="btn btn-primary btn-sm">Recuperar Senha</button>
                                                 </div>
 
                                             </td>

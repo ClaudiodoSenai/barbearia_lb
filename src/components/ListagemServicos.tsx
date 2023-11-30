@@ -18,7 +18,13 @@ const ListagemServicos = () => {
     const deletarServico = (id: number) => {
         axios.delete('http://127.0.0.1:8000/api/delete/' + id).then(function (response) {
             console.log(response.data);
-            alert("Deletado com sucesso");
+            if(response.data.status === true){    
+                console.log(response.data);
+                    alert("Deletado com sucesso");}
+                else{
+                    console.log(response.data);
+                    alert("Ocorreu um erro ao deletar");
+                }
 
             async function fetchData() {
                 try {
@@ -108,16 +114,16 @@ const ListagemServicos = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {servicos.map(usuario => (
-                                        <tr key={usuario.id}>
-                                            <td>{usuario.id}</td>
-                                            <td>{usuario.nome}</td>
-                                            <td>{usuario.preco}</td>
-                                            <td>{usuario.descricao}</td>
-                                            <td>{usuario.duracao}</td>
+                                    {servicos.map(servico => (
+                                        <tr key={servico.id}>
+                                            <td>{servico.id}</td>
+                                            <td>{servico.nome}</td>
+                                            <td>{servico.preco}</td>
+                                            <td>{servico.descricao}</td>
+                                            <td>{servico.duracao}</td>
                                             <td>
-                                                <Link to={"/Atualizar/Servico/" + usuario.id} className='btn btn-primary btn-sm'>Editar</Link>
-                                                <button onClick={() => deletarServico (usuario.id)} className="btn btn-danger btn-sm">Excluir</button>
+                                                <Link to={"/Atualizar/Servico/" + servico.id} className='btn btn-primary btn-sm'>Editar</Link>
+                                                <button onClick={() => deletarServico (servico.id)} className="btn btn-danger btn-sm">Excluir</button>
                                             </td>
                                         </tr>
                                     ))}

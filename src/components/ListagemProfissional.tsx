@@ -15,7 +15,6 @@ const ListagemProfissional = () => {
     const [profissionais, setProfissional] = useState<CadastroProfissionalInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
     const [erro, setError] = useState("");
-
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "pesquisa") {
             setPesquisa(e.target.value);
@@ -25,9 +24,13 @@ const ListagemProfissional = () => {
     const deletarProfissional = (id: number) => {
         axios.delete('http://127.0.0.1:8000/api/profissional/delete/' + id).then(function (response) {
             console.log(response.data);
-           
-            alert("Deletado com sucesso");
-
+            if(response.data.status === true){    
+                console.log(response.data);
+                    alert("Deletado com sucesso");}
+                else{
+                    console.log(response.data);
+                    alert("Ocorreu um erro ao deletar");
+                }
             async function fetchData() {
                 try {
                     const response = await axios.get('http://127.0.0.1:8000/api/profissional/all');
@@ -42,7 +45,6 @@ const ListagemProfissional = () => {
     }
     const buscar = (e: FormEvent) => {
         e.preventDefault();
-
         async function fetchData() {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/api/profissional/find/nome',
@@ -52,7 +54,6 @@ const ListagemProfissional = () => {
                             "Accept": "application/json",
                             "Content-Type": "application/json"
                         }
-
                     }).then(function (response) {
                         if (response.data.status === true) {
                             setProfissional(response.data.data)
@@ -68,7 +69,6 @@ const ListagemProfissional = () => {
         }
         fetchData();
     }
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -78,12 +78,9 @@ const ListagemProfissional = () => {
                 setError("Ocorreu um erro");
                 console.log(error);
             }
-
         }
-
         fetchData();
     }, []);
-
     return (
         <div>
             <main className={styles.main}>
@@ -96,7 +93,6 @@ const ListagemProfissional = () => {
                                 <form onSubmit={buscar} className='row'>
                                     <div className='col-10'>
                                         <input type="text" name='pesquisa' className='form-control' onChange={handleState} />
-
                                     </div>
                                     <div className='col-1'>
                                         <button type='submit' className='btn btn-success'> Pesquisar </button>
@@ -138,7 +134,6 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.celular}</td>
                                             <td>{profissionais.email}</td>
                                             <td>{profissionais.cpf}</td>
-
                                             <td>{profissionais.cidade}</td>
                                             <td>{profissionais.estado}</td>
                                             <td>{profissionais.pais}</td>
@@ -146,11 +141,6 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.numero}</td>
                                             <td>{profissionais.bairro}</td>
                                             <td>{profissionais.cep}</td>
-
-
-
-
-
                                             <td>
                                                 <Link to={"/Atualizar/Profissional/" + profissionais.id} className='btn btn-primary btn-sm'>Editar</Link>
                                                 <button onClick={() => deletarProfissional(profissionais.id)} className="btn btn-danger btn-sm">Excluir</button>
