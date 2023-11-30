@@ -160,9 +160,11 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.bairro}</td>
                                             <td>{profissionais.cep}</td>
                                             <td>
+                                            <div className="btn-group" role="group">
                                                 <Link to={"/Atualizar/Profissional/" + profissionais.id} className='btn btn-primary btn-sm'>Editar</Link>
                                                 <button onClick={() => deletarProfissional(profissionais.id)} className="btn btn-danger btn-sm">Excluir</button>
                                                 <button onClick={() => recuperarSenha(profissionais.id)} className="btn btn-primary btn-sm">Recuperar Senha</button>
+                                            </div>
                                             </td>
                                         </tr>
                                     ))}
