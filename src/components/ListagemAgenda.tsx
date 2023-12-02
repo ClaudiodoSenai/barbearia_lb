@@ -124,7 +124,7 @@ const ListagemAgenda = () => {
                                             <td>{horario.profissional_id}</td>
                                             <td>{horario.data_hora}</td>
                                             <td>
-                                                <Link to={"/Atualizar/Hora/" + horario.id} className='btn btn-primary btn-sm'>Editar</Link>
+                                                <Link to={"/atualizar/hora/" + horario.id} className='btn btn-primary btn-sm'>Editar</Link>
                                                 <a href="#" onClick={() => deletarHorario(horario.id)} className='btn btn-danger btn-sm'>Excluir</a>
                                             </td>
                                         </tr>

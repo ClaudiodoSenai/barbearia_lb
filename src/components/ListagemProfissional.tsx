@@ -43,11 +43,10 @@ const ListagemProfissional = () => {
             fetchData();
         })
     }
-
-    const recuperarSenha = async (id: number) => {
+    const recuperarSenha = async (email: string) => {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/profissional/atualizar/senha', {
-                id: id,
+                email: email,
             });
 
             if (response.data.status === true) {
@@ -60,7 +59,6 @@ const ListagemProfissional = () => {
             alert("Ocorreu um erro ao redefinir a senha. Tente novamente mais tarde.");
         }
     };
-
     const buscar = (e: FormEvent) => {
         e.preventDefault();
         async function fetchData() {
@@ -161,9 +159,9 @@ const ListagemProfissional = () => {
                                             <td>{profissionais.cep}</td>
                                             <td>
                                             <div className="btn-group" role="group">
-                                                <Link to={"/Atualizar/Profissional/" + profissionais.id} className='btn btn-primary btn-sm'>Editar</Link>
+                                                <Link to={"/atualizar/profissional/" + profissionais.id} className='btn btn-primary btn-sm'>Editar</Link>
                                                 <button onClick={() => deletarProfissional(profissionais.id)} className="btn btn-danger btn-sm">Excluir</button>
-                                                <button onClick={() => recuperarSenha(profissionais.id)} className="btn btn-primary btn-sm">Recuperar Senha</button>
+                                                <button onClick={() => recuperarSenha(profissionais.email)} className="btn btn-primary btn-sm">Recuperar Senha</button>
                                             </div>
                                             </td>
                                         </tr>

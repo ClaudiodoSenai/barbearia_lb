@@ -59,7 +59,7 @@ const UpdateClientes = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            window.location.href = "/Listagem/Cliente"
+            window.location.href = "/listagem/cliente"
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });

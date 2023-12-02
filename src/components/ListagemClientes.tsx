@@ -19,13 +19,14 @@ const Listagem = () => {
 
     const deletarCliente = (id: number) => {
         axios.delete('http://127.0.0.1:8000/api/cliente/delete/' + id).then(function (response) {
-            if(response.data.status === true){    
+            if (response.data.status === true) {
                 console.log(response.data);
-                    alert("Deletado com sucesso");}
-                else{
-                    console.log(response.data);
-                    alert("Ocorreu um erro ao deletar");
-                }
+                alert("Deletado com sucesso");
+            }
+            else {
+                console.log(response.data);
+                alert("Ocorreu um erro ao deletar");
+            }
 
             async function fetchData() {
                 try {
@@ -40,10 +41,10 @@ const Listagem = () => {
         })
     }
 
-    const recuperarSenha = async (id: number) => {
+    const recuperarSenha = async (email: string) => {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/cliente/atualizar/senha', {
-                id: id,
+                email: email,
             });
 
             if (response.data.status === true) {
@@ -56,7 +57,6 @@ const Listagem = () => {
             alert("Ocorreu um erro ao redefinir a senha. Tente novamente mais tarde.");
         }
     };
-
 
 
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
@@ -170,9 +170,9 @@ const Listagem = () => {
                                             <td>{cliente.cep}</td>
                                             <td>
                                                 <div className="btn-group" role="group">
-                                                    <Link to={"/Atualizar/Cliente/" + cliente.id} className='btn btn-primary btn-sm'> Editar </Link>
+                                                    <Link to={"/atualizar/cliente/" + cliente.id} className='btn btn-primary btn-sm'> Editar </Link>
                                                     <button onClick={() => deletarCliente(cliente.id)} className="btn btn-danger btn-sm"> Excluir </button>
-                                                    <button onClick={() => recuperarSenha(cliente.id)} className="btn btn-primary btn-sm">Recuperar Senha</button>
+                                                    <button onClick={() => recuperarSenha(cliente.email)} className="btn btn-primary btn-sm">Recuperar Senha</button>
                                                 </div>
 
                                             </td>

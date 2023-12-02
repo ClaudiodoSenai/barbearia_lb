@@ -34,7 +34,7 @@ const CadastroAgenda = () => {
                 console.log(response.data.error);
             }
             else{
-                window.location.href = "/Listagem/Agenda"
+                window.location.href = "/listagem/agenda"
             }
         }).catch(function (error) {
             console.log(error);

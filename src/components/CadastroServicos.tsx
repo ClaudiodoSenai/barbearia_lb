@@ -12,9 +12,18 @@ const CadastroServicos = () => {
     const [preco, setPreco] = useState<string>("");
     const [descricao, setDescricao] = useState<string>("");
     const [duracao, setDuracao] = useState<string>("");
+    const [nomeErro, setNomeErro] = useState<string>("")
+    const [precoErro, setPrecoErro] = useState<string>("")
+    const [descricaoErro, setDescricaoErro] = useState<string>("")
+    const [duracaoErro, setDuracaoErro] = useState<string>("")
 
-
+    // FormEvent monitora os eventos do formulário
     const cadastrarServicos = (e: FormEvent) => {
+        setNomeErro("")
+        setDescricaoErro("")
+        setDuracaoErro("")
+        setPrecoErro("")
+
         e.preventDefault();
 
         const dados = {
@@ -33,12 +42,22 @@ const CadastroServicos = () => {
 
                 }
             }).then(function (response) {
-                if(response.data.success == false){
-                    console.log("error");
-                    console.log(response.data.error);
+                if (response.data.success === false) {
+                    if('nome' in response.data.error){
+                        setNomeErro(response.data.error.nome[0])
+                    }
+                    if('descricao' in response.data.error){
+                        setDescricaoErro(response.data.error.descricao[0])
+                    }
+                    if('duracao' in response.data.error){
+                        setDuracaoErro(response.data.error.duracao[0])
+                    }
+                    if('preco' in response.data.error){
+                        setPrecoErro(response.data.error.preco[0])
+                    }
                 }
                 else{
-                    window.location.href = "/Listagem/Servicos"
+                    window.location.href = "/listagem/servicos"
                 }
             }).catch(function (error) {
                 console.log(error);

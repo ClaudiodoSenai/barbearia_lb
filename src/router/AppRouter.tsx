@@ -5,7 +5,6 @@ import {
     Route,
     Routes
 } from "react-router-dom";
-import Cadastro from "../components/CadastroClientes";
 import CadastroProfissional from "../components/CadastroProfissional";
 import Listagem from "../components/ListagemClientes";
 import ListagemProfissional from "../components/ListagemProfissional";
@@ -17,6 +16,7 @@ import UpdateServicos from "../components/UpdateServico";
 import CadastroAgenda from "../components/CadastroAgenda";
 import ListagemAgenda from "../components/ListagemAgenda";
 import UpdateCadastroAgenda from "../components/UpdateAgenda";
+import CadastroCliente from "../components/CadastroClientes";
 
 
 
@@ -24,40 +24,40 @@ const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/Cadastro/Cliente"
-                    element={<Cadastro />} />
+                <Route path="/cadastro/cliente"
+                    element={<CadastroCliente />} />
 
-                <Route path="/Listagem/Cliente"
+                <Route path="/listagem/cliente"
                     element={<Listagem />} />
 
-                <Route path="/Cadastro/Profissional"
+                <Route path="/cadastro/profissional"
                     element={<CadastroProfissional />} />
 
-                <Route path="/Listagem/Profissional"
+                <Route path="/listagem/profissional"
                     element={<ListagemProfissional />} />
 
-                <Route path="/Cadastro/Servicos"
+                <Route path="/cadastro/servicos"
                     element={<CadastroServicos />} />
 
-                <Route path="/Listagem/Servicos"
+                <Route path="/listagem/servicos"
                     element={<ListagemServicos />} />
 
-                <Route path="/Atualizar/Cliente/:id"
+                <Route path="/atualizar/cliente/:id"
                     element={<UpdateClientes />} />
 
-                <Route path="/Atualizar/Profissional/:id"
+                <Route path="/atualizar/profissional/:id"
                     element={<UpdateProfissional />} />
 
-                <Route path="/Atualizar/Servico/:id"
+                <Route path="/atualizar/servico/:id"
                     element={<UpdateServicos />} />
 
-                <Route path="/Atualizar/Hora/:id"
+                <Route path="/atualizar/Hora/:id"
                     element={<UpdateCadastroAgenda />} />
 
-                <Route path="/Cadastro/Agenda"
+                <Route path="/cadastro/agenda"
                  element={<CadastroAgenda />} />
 
-                <Route path="/Listagem/Agenda" 
+                <Route path="/listagem/agenda" 
                 element={<ListagemAgenda />} />
 
                

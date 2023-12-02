@@ -34,7 +34,7 @@ const UpdateServicos = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            window.location.href = "/Listagem/Servicos"
+            window.location.href = "/listagem/servicos"
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });

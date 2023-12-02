@@ -26,51 +26,30 @@ const UpdateCadastroAgenda = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            if (response.data.status === true) {
-                Swal.fire({
-                    title: "Horario Atualizado",
-                    text: "Agenda atualizada com sucesso",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 1000
-                });
-                window.setTimeout(() => {
-                    window.location.href = "/Listagem/Agenda";
-                }, 1000);
-            } else {
-                console.log("error");
-                console.log(response.data.error);
-                Swal.fire({
-                    title: "Erro",
-                    text: "Erro ao atualizar horario!",
-                    icon: "error",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
+            window.location.href = "/listagem/agenda"
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });
     }
 
 
-        useEffect(() => {
-            async function fetchData() {
-                try {
-                    const response = await axios.get("http://127.0.0.1:8000/api/agenda/find/horario/" + parametro.id);
-                    setId(response.data.data.id);
-                    setData_hora(response.data.data.data_hora);
-                    setProfissional_id(response.data.data.profissional_id);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get("http://127.0.0.1:8000/api/agenda/find/horario/" + parametro.id);
+                setId(response.data.data.id);
+                setData_hora(response.data.data.data_hora);
+                setProfissional_id(response.data.data.profissional_id);
 
-                } catch {
-                    console.log("Erro ao buscar dados da api")
-                }
+            } catch {
+                console.log("Erro ao buscar dados da api")
             }
-            fetchData();
+        }
+        fetchData();
 
-        }, []);
+    }, []);
 
-    
+
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
 
         if (e.target.name === "profissional_id") {

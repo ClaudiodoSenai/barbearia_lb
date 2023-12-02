@@ -59,7 +59,7 @@ const UpdateProfissional = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            window.location.href = "/Listagem/Profissional"
+            window.location.href = "/listagem/profissional"
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });

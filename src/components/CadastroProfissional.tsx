@@ -58,12 +58,17 @@ const CadastroProfissional = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            console.log(response.data.error);
-            console.log("Erro ao cadastrar")
-          
+            
+            if(response.data.success == false){
+                console.log("error")
+                console.log(response.data.error);
+            }
+            else{
+                window.location.href = "/listagem/profissional"
+            }
         }).catch(function (error) {
             console.log(error);
-         
+            
         });
     }
 
