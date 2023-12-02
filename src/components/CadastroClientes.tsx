@@ -22,7 +22,6 @@ const CadastroCliente = () => {
     const [cep, setCep] = useState<string>("");
     const [complemento, setComplemento] = useState<string>("");
     const [senha, setSenha] = useState<string>("");
-    const [pesquisa, setPesquisa] = useState<string>("");
     const [nomeErro, setNomeErro] = useState<string>("");
     const [celularErro, setCelularErro] = useState<string>("");
     const [emailErro, setEmailErro] = useState<string>("");

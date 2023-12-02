@@ -12,10 +12,18 @@ const UpdateServicos = () => {
     const [preco, setPreco] = useState<string>("");
     const [descricao, setDescricao] = useState<string>("");
     const [duracao, setDuracao] = useState<string>("");
+    const [nomeErro, setNomeErro] = useState<string>("")
+    const [precoErro, setPrecoErro] = useState<string>("")
+    const [descricaoErro, setDescricaoErro] = useState<string>("")
+    const [duracaoErro, setDuracaoErro] = useState<string>("")
 
     const parametro = useParams();
 
     const updateServicos = (e: FormEvent) => {
+        setNomeErro("")
+        setDescricaoErro("")
+        setDuracaoErro("")
+        setPrecoErro("")
         e.preventDefault();
 
         const dados = {
@@ -34,7 +42,23 @@ const UpdateServicos = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            window.location.href = "/listagem/servicos"
+            if (response.data.success === false) {
+                if ('nome' in response.data.error) {
+                    setNomeErro(response.data.error.nome[0])
+                }
+                if ('descricao' in response.data.error) {
+                    setDescricaoErro(response.data.error.descricao[0])
+                }
+                if ('duracao' in response.data.error) {
+                    setDuracaoErro(response.data.error.duracao[0])
+                }
+                if ('preco' in response.data.error) {
+                    setPrecoErro(response.data.error.preco[0])
+                }
+            }
+            else {
+                window.location.href = "/listagem/servicos"
+            }
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });
@@ -77,7 +101,7 @@ const UpdateServicos = () => {
 
     return (
         <div>
-            <Header/>
+            <Header />
             <main className={styles.main}>
                 <div className='container'>
                     <div className='card'>
@@ -87,20 +111,23 @@ const UpdateServicos = () => {
                                 <div className='col-6'>
                                     <label htmlFor='nome' className='form-label'>Nome</label>
                                     <input type="text" name='nome' className='form-control' required onChange={handleState} value={nome} />
+                                    <div className='text-danger'>{nomeErro}</div>
+
                                 </div>
                                 <div className='col-6'>
                                     <label htmlFor='preco' className='form-label'>Preço</label>
                                     <input type="text" name='preco' className='form-control' required onChange={handleState} value={preco} />
-
+                                    <div className='text-danger'>{precoErro}</div>
                                 </div>
                                 <div className='col-6'>
                                     <label htmlFor='descricao' className='form-label'>Descrição</label>
                                     <input type="text" name='descricao' className='form-control' required onChange={handleState} value={descricao} />
-
+                                    <div className='text-danger'>{descricao}</div>
                                 </div>
                                 <div className='col-6'>
                                     <label htmlFor='duracao' className='form-label'>Duração</label>
                                     <input type="text" name='duracao' className='form-control' required onChange={handleState} value={duracao} />
+                                    <div className='text-danger'>{duracaoErro}</div>
 
                                 </div>
                                 <div className='col-12'>

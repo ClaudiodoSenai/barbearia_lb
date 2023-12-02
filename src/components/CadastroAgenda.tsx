@@ -10,11 +10,15 @@ const CadastroAgenda = () => {
     // set significa 
     const [profissional_id, setProfissional_id] = useState<string>("");
     const [data_hora, setData_hora] = useState<string>("");
+    const [profissional_idErro, setProfissional_idErro] = useState<string>("");
+    const [data_horaErro, setData_horaErro] = useState<string>("")
 
     // FormEvent monitora os eventos do formulário
     const cadastrarAgenda = (e: FormEvent) => {
-        e.preventDefault();
+        setData_horaErro("")
+        setProfissional_idErro("")
 
+        e.preventDefault();
         const dados = {
             profissional_id: profissional_id,
             data_hora: data_hora
@@ -28,17 +32,20 @@ const CadastroAgenda = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            
-            if(response.data.success == false){
-                console.log("error");
-                console.log(response.data.error);
+            if (response.data.success === false) {
+                if ('profissional_id' in response.data.error) {
+                    setProfissional_idErro(response.data.error.profissional_id[0])
+                }
+                if ('data_hora' in response.data.error) {
+                    setData_horaErro(response.data.error.data_hora[0])
+                }
             }
-            else{
+            else {
                 window.location.href = "/listagem/agenda"
             }
         }).catch(function (error) {
             console.log(error);
-            
+
         });
     }
     const handleState = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,11 +68,15 @@ const CadastroAgenda = () => {
                                 <div className='col-6'>
                                     <label htmlFor='profissional_id' className='form-label'>ID do Profissional</label>
                                     <input type="number" name='profissional_id' className='form-control' required onChange={handleState} />
+                                    <div className='text-danger'>{profissional_idErro}</div>
                                 </div>
                                 <div className='col-6'>
                                     <label htmlFor='profissional_id' className='form-label'>Data e Horário</label>
                                     <input type="datetime-local" name='data_hora' className='form-control' required onChange={handleState} />
+                                    <div className='text-danger'>{data_horaErro}</div>
                                 </div>
+
+
                                 <div className='col-12'>
                                     <button type='submit' className='btn btn-success btn-sn'>Cadastrar</button>
                                 </div>

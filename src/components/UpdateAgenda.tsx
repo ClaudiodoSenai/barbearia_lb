@@ -10,8 +10,12 @@ const UpdateCadastroAgenda = () => {
     const [id, setId] = useState<number>();
     const [profissional_id, setProfissional_id] = useState<string>("");
     const [data_hora, setData_hora] = useState<string>("");
+    const [profissional_idErro, setProfissional_idErro] = useState<string>("");
+    const [data_horaErro, setData_horaErro] = useState<string>("")
     const parametro = useParams();
     const updateCadastrarAgenda = (e: FormEvent) => {
+        setData_horaErro("")
+        setProfissional_idErro("")
         e.preventDefault();
 
         const dados = {
@@ -26,7 +30,18 @@ const UpdateCadastroAgenda = () => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
-            window.location.href = "/listagem/agenda"
+            if (response.data.success === false) {
+                if ('profissional_id' in response.data.error) {
+                    setProfissional_idErro(response.data.error.profissional_id[0])
+                }
+                if ('data_hora' in response.data.error) {
+                    setData_horaErro(response.data.error.data_hora[0])
+                }
+            }
+            else{
+                    window.location.href = "/listagem/agenda"
+            }
+        
         }).catch(function (error) {
             console.log("Ocorreu um erro ao atualizar");
         });
@@ -73,10 +88,14 @@ const UpdateCadastroAgenda = () => {
                                 <div className='col-6'>
                                     <label htmlFor='profissional_id' className='form-label'>ID do Profissional</label>
                                     <input type="number" name='profissional_id' value={profissional_id} className='form-control' required onChange={handleState} />
+                                    <div className='text-danger'>{profissional_idErro}</div>
+
                                 </div>
                                 <div className='col-6'>
                                     <label htmlFor='profissional_id' className='form-label'>Data e Horário</label>
                                     <input type="datetime-local" name='data_hora' value={data_hora} className='form-control' required onChange={handleState} />
+                                    <div className='text-danger'>{data_horaErro}</div>
+
                                 </div>
                                 <div className='col-12'>
                                     <button type='submit' className='btn btn-success btn-sn'>Atualizar</button>
