@@ -9,19 +9,20 @@ const ListagemAgenda = () => {
     const [selectedProfissional, setSelectedProfissional] = useState('');
     const [horarios, setHorarios] = useState<CadastroAgendaInterface[]>([]);
     const [pesquisa, setPesquisa] = useState<string>('');
-    const[profissionais,setProfissionais] = useState<CadastroProfissionalInterface[]>([]);
+    const [profissionais, setProfissionais] = useState<CadastroProfissionalInterface[]>([]);
     const [error, setError] = useState("");
     const { id } = useParams()
     const deletarHorario = (id: number) => {
 
         axios.delete('http://127.0.0.1:8000/api/agenda/delete/' + id).then(function (response) {
-       if(response.data.status === true){    
-        console.log(response.data);
-            alert("Deletado com sucesso");}
-        else{
-            console.log(response.data);
-            alert("Ocorreu um erro ao deletar");
-        }
+            if (response.data.status === true) {
+                console.log(response.data);
+                alert("Deletado com sucesso");
+            }
+            else {
+                console.log(response.data);
+                alert("Ocorreu um erro ao deletar");
+            }
             async function fetchData() {
                 try {
                     const response = await axios.get('http://127.0.0.1:8000/api/horarios/profissionais');
@@ -43,7 +44,7 @@ const ListagemAgenda = () => {
 
     const buscar = async (e: FormEvent) => {
         e.preventDefault();
-    
+
         try {
             const response = await axios.post(
                 'http://127.0.0.1:8000/api/agenda/find/data/',
@@ -55,7 +56,7 @@ const ListagemAgenda = () => {
                     }
                 }
             );
-    
+
             if (response.data.status === true) {
                 setHorarios(response.data.data);
             } else {
@@ -87,23 +88,29 @@ const ListagemAgenda = () => {
         <div>
             <main className={styles.main}>
                 <div className='container'>
-                    <div className='col-12'>
-                        <select className='form-control' value={selectedProfissional} 
-                        onChange={(e) => setSelectedProfissional(e.target.value)}
-                        >
-                            <option value='0'>Todos os Profissionais</option>
-                            {profissionais.map(profissionais => (
-                                 <option key={profissionais.id} value={profissionais.id}>{profissionais.nome}</option>
-                            ))}      
-                        </select>
-                    </div>
+                    <div className='col-md mb-3'>
+                        <div className='card'>
+                            <div className='card-body'>
+                                <h5 className='card-title'>Pesquisar</h5>
 
-                    <div className='col-12'>
-                        <input type="datetime-local" name='pesquisa' className='form-control' onChange={handleState} />
-                    </div>
-
-                    <div className='col-2'>
-                        <button type='submit' className='btn btn-success' onClick={buscar}>Pesquisar</button>
+                                <select className='form-control' value={selectedProfissional}
+                                    onChange={(e) => setSelectedProfissional(e.target.value)}
+                                >
+                                    <option value='0'>Todos os Profissionais</option>
+                                    {profissionais.map(profissionais => (
+                                        <option key={profissionais.id} value={profissionais.id}>{profissionais.nome}</option>
+                                    ))}
+                                </select>
+                                <div className="row">
+                                    <div className="col-10">
+                                        <input type="datetime-local" name='pesquisa' className='form-control' onChange={handleState} />
+                                    </div>
+                                    <div className="col-12">
+                                        <button type='submit' className='btn btn-success'> Pesquisar </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className='card'>
                         <div className='card-body'>
