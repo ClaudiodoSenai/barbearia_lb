@@ -131,7 +131,7 @@ const CadastroProfissional = () => {
                     setComplementoErro(response.data.error.complemento[0])
                 }
                 if ('salario' in response.data.error) {
-                    setSenhaErro(response.data.error.senha[0])
+                    setSenhaErro(response.data.error.salario[0])
                 }
                 if ('senha' in response.data.error) {
                     setSenhaErro(response.data.error.senha[0])
@@ -320,7 +320,7 @@ const CadastroProfissional = () => {
                                       <div className='text-danger'>{salarioErro}</div>
 
                                 </div>
-                                <div className='col-6'>
+                                <div className='col-4'>
                                     <label htmlFor='complemento' className='form-label'>Complemento</label>
                                     <input type="text" name='complemento' className='form-control' required onChange={handleState} />
                                     <div className='text-danger'>{complementoErro}</div>
