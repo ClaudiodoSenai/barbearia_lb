@@ -132,7 +132,7 @@ const UpdateProfissional = () => {
                     setComplementoErro(response.data.error.complemento[0])
                 }
                 if ('salario' in response.data.error) {
-                    setSenhaErro(response.data.error.salario[0])
+                    setSalarioErro(response.data.error.salario[0])
                 }
                 if ('senha' in response.data.error) {
                     setSenhaErro(response.data.error.senha[0])
